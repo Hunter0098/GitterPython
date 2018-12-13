@@ -28,23 +28,18 @@ try:
     i=0
     url="https://api.gitter.im/v1/rooms/"+roomid
     url=url+"/chatMessages?access_token="+token
-    print(url)
+
     msg=requests.get(url).json()
     try:
         while (msg[i]['text']):
-            print("Unread?: ",end="")
-            print(msg[i]['unread'])
             if(msg[i]['unread']):
                 color="darkred"
             else:
                 color="blue"
-            #print("Message from: "+msg[i]['fromUser']['displayName'])
-            #print("Username: "+msg[i]['fromUser']['username'])
             content=content+"\n*****************************\nMessage from: "+msg[i]['fromUser']['displayName']+"\n"
             content=content+"Username: "+msg[i]['fromUser']['username']+"\n*****************************\n\n"
             for p in msg[i]['text']:
                 try:
-                    #print(p,end="")
                     content=content+p
                     temp=temp+p
                     window.update_idletasks() #Used to update idletasks
@@ -52,12 +47,10 @@ try:
                         temp=""
                     if(len(temp)>(window.winfo_width()/5.5)):
                         temp=""
-                        #print("line changed")
                         content=content+"\n"
                 except:
                     print(" UCS-2 codec here")
 
-            print("\n\n*********************************************************\n\n")
             content=content+"\n\n"
             txt.pack(fill="x")
             if(i%2==0):
